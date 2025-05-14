@@ -2,12 +2,9 @@ package server
 
 import (
 	"net/http"
-
+	"my-project/internal/handler"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-
-	"my-project/internal/modules/auth"
-	"my-project/internal/modules/user"
 )
 
 
@@ -31,20 +28,22 @@ func (s *Server) RegisterRoutes() http.Handler {
 	v1 := r.Group("/api/v1")
 	{
 		// Initialize handlers
-		authHandler := auth.NewAuthHandler(s.db) // Changed to exported function
-		userHandler := user.NewUserHandler(s.db)
+		authHandler := handler.NewAuthHandler(s.db) 
+		userHandler := handler.NewUserHandler(s.db)
 
-	// Auth routes
-	auth := v1.Group("/auth")
-	{
-		auth.GET("/", authHandler.HelloAuth)
-	}
+		// Auth routes
+		auth := v1.Group("/auth")
+		{
+			auth.GET("/", authHandler.HelloAuth)
+			auth.POST("/signup", authHandler.SignUp)
+			auth.POST("/signin", authHandler.SignIn)
+		}
 
-	// User routes
-	user := v1.Group("/user")
-	{
-		user.GET("/", userHandler.HelloUser)
-	}
+		// User routes
+		user := v1.Group("/user")
+		{
+			user.GET("/", userHandler.HelloUser)
+		}
 	}
 
 	//This route will catch the error if user hits a route that does not exist in our api.
