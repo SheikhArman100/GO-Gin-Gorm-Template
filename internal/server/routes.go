@@ -48,7 +48,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	//This route will catch the error if user hits a route that does not exist in our api.
 	r.NoRoute(noRouteHandler)
-
+	
 	return r
 }
 
