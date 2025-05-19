@@ -32,6 +32,26 @@ A robust and scalable REST API template built with Go, featuring user authentica
 └── Makefile                    # Development and build automation commands
 ```
 
+## Technology Stack
+
+### Core Technologies
+- **Go**: Primary programming language (1.16+)
+- **Gin**: High-performance HTTP web framework
+- **GORM**: Feature-rich ORM for MySQL
+- **MySQL**: Robust relational database
+
+### Middleware & Security
+- **JWT**: JSON Web Token authentication
+- **CORS**: Cross-Origin Resource Sharing support
+- **Bcrypt**: Password hashing
+- **Validator**: Request validation
+
+### Development Tools
+- **Air**: Live reload for development
+- **Docker**: Containerization
+- **Make**: Build automation
+- **Go Modules**: Dependency management
+
 ## Features
 
 - **Clean Architecture**: Organized with a clear separation of concerns
@@ -43,6 +63,42 @@ A robust and scalable REST API template built with Go, featuring user authentica
 - **Health Check**: Endpoint for monitoring service health
 - **Docker Support**: Easy database setup with Docker
 - **Hot Reload**: Development with automatic rebuilding
+
+## Creating New API Endpoints
+
+### 1. Define the Model
+Create a new model in `internal/model/` following this pattern:
+
+```go
+type YourModel struct {
+    gorm.Model
+    Field1 string `json:"field1" binding:"required"`
+    Field2 string `json:"field2"`
+}
+```
+
+### 2. Create the Handler
+Add a new handler in `internal/handler/` with these components:
+- Request/Response structs
+- CRUD operations
+- Input validation
+- Error handling
+
+### 3. Register Routes
+Add your routes in `internal/server/routes.go`:
+
+```go
+func (s *Server) setupRoutes() {
+    // ... existing routes ...
+    api.GET("/your-endpoint", handler.GetYourEndpoint)
+    api.POST("/your-endpoint", handler.CreateYourEndpoint)
+}
+```
+
+### 4. Testing
+- Write unit tests for your handler
+- Add integration tests if needed
+- Test endpoints using tools like Postman
 
 ## Getting Started
 
