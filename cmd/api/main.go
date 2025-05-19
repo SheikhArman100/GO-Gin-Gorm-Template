@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"my-project/internal/server"
+	"my-project/internal/logger"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
@@ -38,6 +39,10 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 }
 
 func main() {
+	//initialize logger
+	logger.InitLogger()
+	//log api error
+	defer logger.ErrorLogger.Sync()
 
 	server := server.NewServer()
 
