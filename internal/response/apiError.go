@@ -44,7 +44,7 @@ func ApiError(c *gin.Context, statusCode int, message string, errorMessages ...i
 		zap.Int("statusCode", statusCode),
 		zap.String("message", message),
 		zap.Any("errorMessages", errResp.ErrorMessages),
-		zap.String("stack", stack),
+		// zap.String("stack", stack),
 		zap.String("path", c.Request.URL.Path),
 		zap.String("method", c.Request.Method),
 		zap.String("clientIP", c.ClientIP()),
